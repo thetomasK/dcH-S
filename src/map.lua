@@ -1,7 +1,14 @@
 local map = {}
 
+local player = require "src.player"
+
+function Position()
+    love.graphics.print("Player Position: (" .. player.grid_x .. ", " .. player.grid_y .. ")")
+end
+
+
 function map.load()
-    square_size = 62 -- you can guess what this does
+    square_size = 32 -- you can guess what this does
 end
 
 function map.draw()
@@ -24,6 +31,10 @@ function map.draw()
     end
 
     love.graphics.setColor(1, 1, 1) -- Reset color
+    Position()
 end
 
 return map
+
+
+

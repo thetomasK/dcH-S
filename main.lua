@@ -1,12 +1,15 @@
 local player = require "src.player"
 local tiles = require "src.tiles"
 local map = require "src.map"
+local position = require "src.map"
+
 
 function love.load()
     tiles.load()
     map.load()
     player.load()
-    
+    position.load()
+
     love.keyboard.keysPressed = {}
 end
 
@@ -18,6 +21,7 @@ end
 function love.draw()
     map.draw()
     player.draw()
+    position.load()
 end
 
 function love.keypressed(key)
