@@ -43,38 +43,38 @@ function player.update(dt)
     end
     -- Mouse click detection 
     -- Numpad 
-    if love.keyboard.wasPressed("kp6") then
+    if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
         player.grid_x = player.grid_x + 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp4") then
+    elseif love.keyboard.wasPressed("kp4") or love.keyboard.wasPressed("a") then
         player.grid_x = player.grid_x - 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp2") then
+    elseif love.keyboard.wasPressed("kp2") or love.keyboard.wasPressed("s") then
         player.grid_y = player.grid_y + 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp8") then
+    elseif love.keyboard.wasPressed("kp8") or love.keyboard.wasPressed("w") then
         player.grid_y = player.grid_y - 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp3") then
+    elseif love.keyboard.wasPressed("kp3") or love.keyboard.wasPressed("x") then
         player.grid_x = player.grid_x + 1
         player.grid_y = player.grid_y + 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp1") then
+    elseif love.keyboard.wasPressed("kp1") or love.keyboard.wasPressed("z") then
         player.grid_x = player.grid_x - 1
         player.grid_y = player.grid_y + 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp9") then
+    elseif love.keyboard.wasPressed("kp9") or love.keyboard.wasPressed("e") then
         player.grid_x = player.grid_x + 1
         player.grid_y = player.grid_y - 1
         time = time + 1
 
-    elseif love.keyboard.wasPressed("kp7") then
+    elseif love.keyboard.wasPressed("kp7") or love.keyboard.wasPressed("q") then
         player.grid_x = player.grid_x - 1
         player.grid_y = player.grid_y - 1
         time = time + 1
