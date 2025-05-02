@@ -99,7 +99,6 @@ function player.update(dt)
             if selected_spell then
                 local aim_x, aim_y = getMouseGridPosition(square_size)
                 selected_spell.effect(player.grid_x, player.grid_y, aim_x, aim_y)
-                time = time + 1
             end
         end
     end

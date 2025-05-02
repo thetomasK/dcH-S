@@ -1,21 +1,32 @@
 local spell = {}
 
 -- Example spell 1
+local selected = {}
+
+-- Fireball (requires double tap)
 spell[1] = {
     name = "Fireball",
     effect = function(x, y, aim_x, aim_y)
-        -- Calculate the distance using simple grid distance (e.g., Manhattan or Euclidean)
-        local dx = aim_x - x
-        local dy = aim_y - y
-        local distance = math.sqrt(dx * dx + dy * dy)  -- Euclidean distance
-
-        local max_range = 5  -- You can change this to match your spell's intended range
-
-        if distance > max_range then
-            print("You are out of reach!")
+        -- Use the selected state from the 'selected' table for each spell
+        if not selected[1] then
+            print("Selected spell: Fireball (press again to cast)")
+            selected[1] = true
         else
-            print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
-            -- Add your fireball logic here
+            -- Check distance
+            local dx = aim_x - x
+            local dy = aim_y - y
+            local distance = math.sqrt(dx * dx + dy * dy)
+            local max_range = 5
+
+            if distance > max_range then
+                print("You are out of reach!")
+                
+            else
+                print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
+                -- Spell effect logic goes here
+            end
+
+            selected[1] = false -- Reset after cast
         end
     end
 }
