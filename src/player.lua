@@ -1,14 +1,14 @@
 local tiles = require "src.tiles"
+local spell = require "src.spell"
 
 local player = {}
 time = 0 
 
 function player.load()
-    player.grid_x = 3
-    player.grid_y = 3
 end
 
 function player.update(dt)
+    -- Handle mouse input as before
     if love.mouse.isDown(1) then
         local mouse_x, mouse_y = love.mouse.getPosition()
         local hover_x = math.floor(mouse_x / square_size) + 1
@@ -41,8 +41,8 @@ function player.update(dt)
         last_hover_x = nil
         last_hover_y = nil
     end
-    -- Mouse click detection 
-    -- Numpad 
+    
+    -- Handle Numpad and WASD movement as before
     if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
         player.grid_x = player.grid_x + 1
         time = time + 1
@@ -81,11 +81,20 @@ function player.update(dt)
 
     elseif love.keyboard.wasPressed("kp5") then
         time = time + 1
-
-        -- waste turn
+    end
+    
+    -- Handle number keys 0-9 for spellcasting
+    for i = 1, 9 do
+        local key = tostring(i)
+        if love.keyboard.wasPressed(key) then
+            local spell = spell[i]
+            if spell then
+                spell.effect(player.grid_x, player.grid_y)  -- Cast spell at player's position
+                time = time + 1
+            end
+        end
     end
 end
-
 function player.draw()
     -- Calculate the player's center position based on grid
     local draw_x = (player.grid_x - 1) * square_size + square_size / 2
