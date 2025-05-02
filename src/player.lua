@@ -7,6 +7,14 @@ time = 0
 function player.load()
 end
 
+function getMouseGridPosition(square_size)
+    local mouse_x, mouse_y = love.mouse.getPosition()
+    local aim_x = math.floor(mouse_x / square_size)
+    local aim_y = math.floor(mouse_y / square_size)
+    return aim_x, aim_y
+end
+
+
 function player.update(dt)
     -- Handle mouse input as before
     if love.mouse.isDown(1) then
@@ -87,9 +95,10 @@ function player.update(dt)
     for i = 1, 9 do
         local key = tostring(i)
         if love.keyboard.wasPressed(key) then
-            local spell = spell[i]
-            if spell then
-                spell.effect(player.grid_x, player.grid_y)  -- Cast spell at player's position
+            local selected_spell = spell[i]
+            if selected_spell then
+                local aim_x, aim_y = getMouseGridPosition(square_size)
+                selected_spell.effect(player.grid_x, player.grid_y, aim_x, aim_y)
                 time = time + 1
             end
         end
@@ -102,21 +111,16 @@ function player.draw()
 
     local image_offset = 16
 
-    -- Draw the playerr at the current position
+    -- Draw the player at the current position
     tiles.draw(draw_x - image_offset, draw_y - image_offset)
 
-    -- Highlight the square the player is look at
-    local mouse_x, mouse_y = love.mouse.getPosition()
-    local aim_x = math.floor(mouse_x / square_size)
-    local aim_y = math.floor(mouse_y / square_size)
+    -- Get the grid position the mouse is pointing at
+    local aim_x, aim_y = getMouseGridPosition(square_size)
 
     -- Draw a semi-transparent rectangle to highlight the target square
-    love.graphics.setColor(0.5, 0.5, 1, 0.5) -- transparency(light blue i thing i will change it to yelow or something diff)
+    love.graphics.setColor(0.5, 0.5, 1, 0.5) -- light blue highlight (you can change this color)
     love.graphics.rectangle("fill", aim_x * square_size, aim_y * square_size, square_size, square_size)
-
-    -- Reset color to default
-    love.graphics.setColor(1, 1, 1)
-    
+ 
 end
 
 return player
