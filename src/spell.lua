@@ -23,7 +23,7 @@ spell[1] = {
                 
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
-                -- Spell effect logic goes here
+                time = time + 1
             end
 
             selected[1] = false -- Reset after cast
@@ -33,12 +33,20 @@ spell[1] = {
 
 
 
--- Example spell 1
+
 spell[2] = {
-    name = "blink",
+    name = "heal",
     effect = function(x, y, aim_x, aim_y)
-        print("Casting blink from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")    
-        -- Add your firebolt logic here (e.g., explosion effect, damage to enemies, etc.)
+        print("Casting heal from (" .. x .. ", " .. y .. ")")    
+        time = time + 1
+    end
+}
+
+spell[3] = {
+    name = "simple test spell",
+    effect = function(x, y, aim_x, aim_y)
+        print("simple test spell (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")    
+        ime = time + 1
     end
 }
 
