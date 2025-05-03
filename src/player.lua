@@ -9,8 +9,8 @@ end
 
 function getMouseGridPosition(square_size)
     local mouse_x, mouse_y = love.mouse.getPosition()
-    local aim_x = math.floor(mouse_x / square_size)
-    local aim_y = math.floor(mouse_y / square_size)
+    local aim_x = math.floor(mouse_x / square_size) + 1 -- koooooookt +1
+    local aim_y = math.floor(mouse_y / square_size) + 1 
     return aim_x, aim_y
 end
 
@@ -50,7 +50,7 @@ function player.update(dt)
         last_hover_y = nil
     end
     
-    -- Handle Numpad and WASD movement as before
+    -- Handle Numpad and WASD + xz movement as before
     if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
         player.grid_x = player.grid_x + 1
         time = time + 1
@@ -118,7 +118,8 @@ function player.draw()
 
     -- Draw a semi-transparent rectangle to highlight the target square
     love.graphics.setColor(0.5, 0.5, 1, 0.5) -- light blue highlight (you can change this color)
-    love.graphics.rectangle("fill", aim_x * square_size, aim_y * square_size, square_size, square_size)
+    love.graphics.rectangle("fill", (aim_x - 1) * square_size, (aim_y - 1) * square_size, square_size, square_size)
+
  
 end
 
