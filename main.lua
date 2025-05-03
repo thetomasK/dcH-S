@@ -1,7 +1,7 @@
 local player = require "src.player"
 local tiles = require "src.tiles"
 local map = require "src.map"
-
+local spell = require "src.spell"
 
 
 function love.load()
@@ -21,7 +21,7 @@ end
 function love.draw()
     map.draw()
     player.draw()
-   
+    
 end
 
 function love.keypressed(key)

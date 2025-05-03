@@ -1,53 +1,28 @@
 local spell = {}
-
--- Example spell 1
 local selected = {}
+local time = 0
 
--- Fireball (requires double tap)
 spell[1] = {
     name = "Fireball",
     effect = function(x, y, aim_x, aim_y)
-        -- Use the selected state from the 'selected' table for each spell
         if not selected[1] then
-            print("Selected spell: Fireball (press again to cast)")
             selected[1] = true
+            print("Selected spell: Fireball (press again to cast)")
         else
-            -- Check distance
-            local dx = aim_x - x
-            local dy = aim_y - y
-            local distance = math.sqrt(dx * dx + dy * dy)
-            local max_range = 5
-
-            if distance > max_range then
-                print("You are out of reach!")
-                
+            if aim_x == 0 or aim_y == 0 then
+                print("Invalid aim position! (aim_x or aim_y is 0 u would hit your self dummy)")
+            elseif x > aim_x * 5 or x < aim_x / 5 or y > aim_y * 5 or y < aim_y / 5 then
+                print("You are out of reach!(" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 time = time + 1
             end
-
-            selected[1] = false -- Reset after cast
+            selected[1] = false
         end
-    end
-}
+    end,
 
 
-
-
-spell[2] = {
-    name = "heal",
-    effect = function(x, y, aim_x, aim_y)
-        print("Casting heal from (" .. x .. ", " .. y .. ")")    
-        time = time + 1
-    end
-}
-
-spell[3] = {
-    name = "simple test spell",
-    effect = function(x, y, aim_x, aim_y)
-        print("simple test spell (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")    
-        ime = time + 1
-    end
+    
 }
 
 
