@@ -21,8 +21,6 @@ spell[1] = {
         end
     end,
 
-
-    
 }
 
 
