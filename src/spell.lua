@@ -31,7 +31,7 @@ spell[1] = {
             print("Selected spell: Fireball (press again to cast)")
             squareHighlight(x, y, spell[1].range)
         else
-            if aim_x == 0 or aim_y == 0 then
+            if aim_x == x or aim_y == y then
                 print("Invalid aim position! (aim_x or aim_y is 0, you would hit yourself)")
             elseif range_check(x, y, aim_x, aim_y, spell[1].range) then
                 print("You are out of reach! (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
