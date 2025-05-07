@@ -3,25 +3,26 @@ local tiles = require "src.tiles"
 local map = require "src.map"
 local spell = require "src.spell"
 
-
 function love.load()
     tiles.load()
     map.load()
     player.load()
     
-
     love.keyboard.keysPressed = {}
 end
 
 function love.update(dt)
     player.update(dt)
-    love.keyboard.keysPressed = {} -- Clear pressed keys after update
+      -- << Call spell logic here
+    spell.update(dt)
+    love.keyboard.keysPressed = {}
 end
 
 function love.draw()
     map.draw()
     player.draw()
-    
+    spell.draw()
+         -- << Draw spell visuals here
 end
 
 function love.keypressed(key)
@@ -31,3 +32,4 @@ end
 function love.keyboard.wasPressed(key)
     return love.keyboard.keysPressed[key]
 end
+
