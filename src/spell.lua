@@ -2,7 +2,6 @@
 local spell = {}
 local selected = {}
 
-
 -- Variables to store highlight position and range
 local highlight_x = nil
 local highlight_y = nil
@@ -12,12 +11,15 @@ local function range_check(x, y, aim_x, aim_y, range)
     return (x > aim_x + range) or (x < aim_x - range) or (y > aim_y + range) or (y < aim_y - range)
 end
 
-
 local function squareHighlight(x, y, range)
     highlight_x = x
     highlight_y = y
     highlight_range = range
 end
+
+local function uMadeturn(x, y)
+end
+
 
 -- Fireball spell definition
 spell[1] = {
@@ -33,7 +35,6 @@ spell[1] = {
                 print("Invalid aim position! (aim_x or aim_y is 0, you would hit yourself)")
             elseif range_check(x, y, aim_x, aim_y, spell[1].range) then
                 print("You are out of reach! (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
-        
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 time = time + 1  -- Increment time after the cast
@@ -46,8 +47,25 @@ spell[1] = {
     end
 }
 
+
 function spell.update(dt)
-    -- Add cooldowns or spell effects here
+    -- Cancel spell selection if "F" is pressed and a spell is selected
+    if (love.keyboard.isDown("f") or uMadeturn(x,y)) and selected[1] then
+        -- Reset the selection and highlight
+        selected[1] = false
+        highlight_x = nil
+        highlight_y = nil
+        highlight_range = nil
+
+        -- Print the message only once
+        if not cancelPrinted then
+            print("Spell selection canceled.")
+            cancelPrinted = true  -- Set the flag to true to prevent further printing
+        end
+    else
+        -- Reset the cancelPrinted flag when "F" is not pressed, allowing future cancellations
+        cancelPrinted = false
+    end
 end
 
 function spell.draw()
