@@ -1,15 +1,11 @@
--- Spell system for LÖVE2D
-
 local spell = {}
 local selected = {}
 
 -- Tile size in pixels
 local tile_size = 32
 
--- Spell names (extend this list as needed)
-local spell_names = {
-    "fireball", "iceblast", 
-}
+-- Spell names
+local spell_names = { "fireball", "iceblast" }
 
 -- Image storage
 local spell_images = {}
@@ -33,7 +29,15 @@ local cancelKeys = {
 
 local cancelPrinted = false
 
--- Check if any key from a list is down
+-- Helper: Deselect all spells
+local function deselectAll()
+    for i = 1, #selected do
+        selected[i] = false
+    end
+    highlight_x, highlight_y, highlight_range = nil, nil, nil
+end
+
+-- Helper: Any cancel key pressed?
 local function anyKeyDown(keys)
     for _, key in ipairs(keys) do
         if love.keyboard.isDown(key) then
@@ -48,14 +52,14 @@ local function range_check(x, y, aim_x, aim_y, range)
     return (x > aim_x + range) or (x < aim_x - range) or (y > aim_y + range) or (y < aim_y - range)
 end
 
--- Set highlight
+-- Set highlight area
 local function squareHighlight(x, y, range)
     highlight_x = x
     highlight_y = y
     highlight_range = range
 end
 
--- Add a spell animation
+-- Spell animation
 local function fastSpellAnimations(spell_type, x, y, aim_x, aim_y)
     table.insert(spell.active_animations, {
         type = spell_type,
@@ -68,12 +72,13 @@ local function fastSpellAnimations(spell_type, x, y, aim_x, aim_y)
     })
 end
 
--- Create spell definitions
+-- Fireball spell
 table.insert(spell, {
     name = "fireball",
     range = 5,
     effect = function(x, y, aim_x, aim_y)
         if not selected[1] then
+            deselectAll()
             selected[1] = true
             print("Selected spell: Fireball (press again to cast)")
             squareHighlight(x, y, spell[1].range)
@@ -87,17 +92,18 @@ table.insert(spell, {
                 fastSpellAnimations("fireball", x - 1, y - 1, aim_x - 1, aim_y - 1)
                 time = time + 1 -- assuming global time
             end
-            selected[1] = false
-            highlight_x, highlight_y, highlight_range = nil, nil, nil
+            deselectAll()
         end
     end
 })
 
+-- Iceblast spell
 table.insert(spell, {
     name = "iceblast",
-    range = 5,
+    range = 4,
     effect = function(x, y, aim_x, aim_y)
         if not selected[2] then
+            deselectAll()
             selected[2] = true
             print("Selected spell: Iceblast (press again to cast)")
             squareHighlight(x, y, spell[2].range)
@@ -109,27 +115,27 @@ table.insert(spell, {
             else
                 print("Casting Iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 fastSpellAnimations("iceblast", x - 1, y - 1, aim_x - 1, aim_y - 1)
-                time = time + 1 -- assuming global time
+                time = time + 1
             end
-            selected[2] = false
-            highlight_x, highlight_y, highlight_range = nil, nil, nil
+            deselectAll()
         end
     end
 })
 
 -- Update function
 function spell.update(dt)
-    if (anyKeyDown(cancelKeys) or love.mouse.isDown(1) or love.mouse.isDown(2)) and (selected[1] or selected[2]) then
-        selected[1] = false
-        selected[2] = false
-        highlight_x, highlight_y, highlight_range = nil, nil, nil
-        if not cancelPrinted then
-            print("Spell selection canceled.")
-            cancelPrinted = true
+    for i = 1, #selected do
+        if selected[i] and (anyKeyDown(cancelKeys) or love.mouse.isDown(1) or love.mouse.isDown(2)) then
+            deselectAll()
+            if not cancelPrinted then
+                print("Spell selection canceled.")
+                cancelPrinted = true
+            end
+            break
         end
-    else
-        cancelPrinted = false
     end
+
+    cancelPrinted = false
 
     for i = #spell.active_animations, 1, -1 do
         local anim = spell.active_animations[i]
