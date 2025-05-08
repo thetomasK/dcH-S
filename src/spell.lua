@@ -77,15 +77,16 @@ table.insert(spell, {
     name = "fireball",
     range = 5,
     effect = function(x, y, aim_x, aim_y)
-        if not selected[1] then
+        local spellIndex = 1
+        if not selected[spellIndex] then
             deselectAll()
-            selected[1] = true
+            selected[spellIndex] = true
             print("Selected spell: Fireball (press again to cast)")
-            squareHighlight(x, y, spell[1].range)
+            squareHighlight(x, y, spell[spellIndex].range)
         else
             if aim_x == x and aim_y == y then
                 print("Invalid aim position! (you would hit yourself)")
-            elseif range_check(x, y, aim_x, aim_y, spell[1].range) then
+            elseif range_check(x, y, aim_x, aim_y, spell[spellIndex].range) then
                 print("You are out of reach!")
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
@@ -102,15 +103,16 @@ table.insert(spell, {
     name = "iceblast",
     range = 4,
     effect = function(x, y, aim_x, aim_y)
-        if not selected[2] then
+        local spellIndex = 2
+        if not selected[spellIndex] then
             deselectAll()
-            selected[2] = true
+            selected[spellIndex] = true
             print("Selected spell: Iceblast (press again to cast)")
-            squareHighlight(x, y, spell[2].range)
+            squareHighlight(x, y, spell[spellIndex].range)
         else
             if aim_x == x and aim_y == y then
                 print("Invalid aim position! (you would hit yourself)")
-            elseif range_check(x, y, aim_x, aim_y, spell[2].range) then
+            elseif range_check(x, y, aim_x, aim_y, spell[spellIndex].range) then
                 print("You are out of reach!")
             else
                 print("Casting Iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
