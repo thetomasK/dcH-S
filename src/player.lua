@@ -92,7 +92,7 @@ function player.update(dt)
     end
     
     -- Handle number keys 0-9 for spellcasting
-    for i = 1, 9 do
+    for i = 0, 9 do
         local key = tostring(i)
         if love.keyboard.wasPressed(key) then
             local selected_spell = spell[i]

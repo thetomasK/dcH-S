@@ -72,12 +72,13 @@ local function fastSpellAnimations(spell_type, x, y, aim_x, aim_y)
     })
 end
 
--- Fireball spell
-table.insert(spell, {
+spellIndex = 1
+spellIndex2 = 2
+
+spell[spellIndex] = {
     name = "fireball",
     range = 5,
     effect = function(x, y, aim_x, aim_y)
-        local spellIndex = 1
         if not selected[spellIndex] then
             deselectAll()
             selected[spellIndex] = true
@@ -96,33 +97,31 @@ table.insert(spell, {
             deselectAll()
         end
     end
-})
+}
 
--- Iceblast spell
-table.insert(spell, {
+spell[spellIndex2] = {
     name = "iceblast",
-    range = 4,
+    range = 5,
     effect = function(x, y, aim_x, aim_y)
-        local spellIndex = 2
-        if not selected[spellIndex] then
+        if not selected[spellIndex2] then
             deselectAll()
-            selected[spellIndex] = true
-            print("Selected spell: Iceblast (press again to cast)")
-            squareHighlight(x, y, spell[spellIndex].range)
+            selected[spellIndex2] = true
+            print("Selected spell: iceblast (press again to cast)")
+            squareHighlight(x, y, spell[spellIndex2].range)
         else
             if aim_x == x and aim_y == y then
                 print("Invalid aim position! (you would hit yourself)")
-            elseif range_check(x, y, aim_x, aim_y, spell[spellIndex].range) then
+            elseif range_check(x, y, aim_x, aim_y, spell[spellIndex2].range) then
                 print("You are out of reach!")
             else
-                print("Casting Iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
+                print("Casting iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 fastSpellAnimations("iceblast", x - 1, y - 1, aim_x - 1, aim_y - 1)
-                time = time + 1
+                time = time + 1 -- assuming global time
             end
             deselectAll()
         end
     end
-})
+}
 
 -- Update function
 function spell.update(dt)
