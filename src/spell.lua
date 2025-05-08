@@ -1,20 +1,29 @@
+-- Spell system for LÖVE2D
+
 local spell = {}
 local selected = {}
-local fireball_image = love.graphics.newImage("tiles/asets/spells/fireball.png")
 
+-- Tile size in pixels
+local tile_size = 32
 
+-- Spell names (extend this list as needed)
+local spell_names = {
+    "fireball", "iceblast", 
+}
 
+-- Image storage
+local spell_images = {}
+for _, name in ipairs(spell_names) do
+    spell_images[name] = love.graphics.newImage("tiles/asets/spells/" .. name .. ".png")
+end
 
--- Variables to store highlight position and range
+-- Active animations
+spell.active_animations = {}
+
+-- Highlight variables
 local highlight_x = nil
 local highlight_y = nil
 local highlight_range = nil
-
--- Table to store active spell animations
-spell.active_animations = {}
-
--- Tile size (32px)
-local tile_size = 32
 
 -- Cancel keys
 local cancelKeys = {
@@ -24,7 +33,7 @@ local cancelKeys = {
 
 local cancelPrinted = false
 
--- Utility: Check if any key from a list is currently held down
+-- Check if any key from a list is down
 local function anyKeyDown(keys)
     for _, key in ipairs(keys) do
         if love.keyboard.isDown(key) then
@@ -39,29 +48,29 @@ local function range_check(x, y, aim_x, aim_y, range)
     return (x > aim_x + range) or (x < aim_x - range) or (y > aim_y + range) or (y < aim_y - range)
 end
 
--- Highlight square
+-- Set highlight
 local function squareHighlight(x, y, range)
     highlight_x = x
     highlight_y = y
     highlight_range = range
 end
 
--- Add fireball animation
-local function fastSpellAnimations(x, y, aim_x, aim_y)
+-- Add a spell animation
+local function fastSpellAnimations(spell_type, x, y, aim_x, aim_y)
     table.insert(spell.active_animations, {
-        type = "fireball",
-        x = x + 0.5,  -- Start from the middle of the tile (center)
-        y = y + 0.5,  -- Start from the middle of the tile (center)
-        aim_x = aim_x + 0.5,  -- Target's middle point
-        aim_y = aim_y + 0.5,  -- Target's middle point
+        type = spell_type,
+        x = x + 0.5,
+        y = y + 0.5,
+        aim_x = aim_x + 0.5,
+        aim_y = aim_y + 0.5,
         progress = 0,
-        speed = 10-- tiles per second
+        speed = 10
     })
 end
 
--- Fireball spell definition
-spell[1] = {
-    name = "Fireball",
+-- Create spell definitions
+table.insert(spell, {
+    name = "fireball",
     range = 5,
     effect = function(x, y, aim_x, aim_y)
         if not selected[1] then
@@ -72,29 +81,48 @@ spell[1] = {
             if aim_x == x and aim_y == y then
                 print("Invalid aim position! (you would hit yourself)")
             elseif range_check(x, y, aim_x, aim_y, spell[1].range) then
-                print("You are out of reach! (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
+                print("You are out of reach!")
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
-                fastSpellAnimations(x - 1, y - 1, aim_x - 1, aim_y -1)
-                time = time + 1 -- Assuming 'time' is global
+                fastSpellAnimations("fireball", x - 1, y - 1, aim_x - 1, aim_y - 1)
+                time = time + 1 -- assuming global time
             end
             selected[1] = false
-            highlight_x = nil
-            highlight_y = nil
-            highlight_range = nil
+            highlight_x, highlight_y, highlight_range = nil, nil, nil
         end
     end
-}
+})
 
--- Update logic
+table.insert(spell, {
+    name = "iceblast",
+    range = 5,
+    effect = function(x, y, aim_x, aim_y)
+        if not selected[2] then
+            selected[2] = true
+            print("Selected spell: Iceblast (press again to cast)")
+            squareHighlight(x, y, spell[2].range)
+        else
+            if aim_x == x and aim_y == y then
+                print("Invalid aim position! (you would hit yourself)")
+            elseif range_check(x, y, aim_x, aim_y, spell[2].range) then
+                print("You are out of reach!")
+            else
+                print("Casting Iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
+                fastSpellAnimations("iceblast", x - 1, y - 1, aim_x - 1, aim_y - 1)
+                time = time + 1 -- assuming global time
+            end
+            selected[2] = false
+            highlight_x, highlight_y, highlight_range = nil, nil, nil
+        end
+    end
+})
+
+-- Update function
 function spell.update(dt)
-    -- Cancel logic
-    if ((anyKeyDown(cancelKeys) or love.mouse.isDown(1) or love.mouse.isDown(2))) and selected[1] then
+    if (anyKeyDown(cancelKeys) or love.mouse.isDown(1) or love.mouse.isDown(2)) and (selected[1] or selected[2]) then
         selected[1] = false
-        highlight_x = nil
-        highlight_y = nil
-        highlight_range = nil
-
+        selected[2] = false
+        highlight_x, highlight_y, highlight_range = nil, nil, nil
         if not cancelPrinted then
             print("Spell selection canceled.")
             cancelPrinted = true
@@ -103,12 +131,10 @@ function spell.update(dt)
         cancelPrinted = false
     end
 
-    -- Update animations
     for i = #spell.active_animations, 1, -1 do
         local anim = spell.active_animations[i]
-       
-        local dx = anim.aim_x - anim.x  
-        local dy = anim.aim_y - anim.y  
+        local dx = anim.aim_x - anim.x
+        local dy = anim.aim_y - anim.y
         local dist = math.sqrt(dx * dx + dy * dy)
         if dist < 0.1 then
             table.remove(spell.active_animations, i)
@@ -121,9 +147,8 @@ function spell.update(dt)
     end
 end
 
--- Draw highlight and animations
+-- Draw function
 function spell.draw()
-    -- Draw spell range highlight
     if highlight_x and highlight_y and highlight_range then
         love.graphics.setColor(1, 1, 0, 0.2)
         local size = (highlight_range * 2 + 1) * tile_size
@@ -133,16 +158,16 @@ function spell.draw()
         love.graphics.setColor(1, 1, 1, 1)
     end
 
-    -- Draw fireball animations
     for _, anim in ipairs(spell.active_animations) do
-        if anim.type == "fireball" then
-            love.graphics.setColor(1, 1, 1, 1) -- Reset color to normal before drawing the image
+        local image = spell_images[anim.type]
+        if image then
             local draw_x = anim.x * tile_size
             local draw_y = anim.y * tile_size
-            love.graphics.draw(fireball_image, draw_x, draw_y, 0, 1, 1, fireball_image:getWidth() / 2, fireball_image:getHeight() / 2)
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(image, draw_x, draw_y, 0, 1, 1, image:getWidth() / 2, image:getHeight() / 2)
         end
     end
-    
+
     love.graphics.setColor(1, 1, 1, 1)
 end
 
