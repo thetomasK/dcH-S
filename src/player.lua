@@ -3,14 +3,17 @@ local spell = require "src.spell"
 
 local player = {}
 time = 0 
+player.grid_y = 0
+player.grid_x = 0
+
 
 function player.load()
 end
 
 function getMouseGridPosition(square_size)
     local mouse_x, mouse_y = love.mouse.getPosition()
-    local aim_x = math.floor(mouse_x / square_size) + 1 -- koooooookt +1
-    local aim_y = math.floor(mouse_y / square_size) + 1 
+    local aim_x = math.floor(mouse_x / square_size)  -- koooooookt +1
+    local aim_y = math.floor(mouse_y / square_size) 
     return aim_x, aim_y
 end
 
@@ -19,8 +22,8 @@ function player.update(dt)
     -- Handle mouse input as before
     if love.mouse.isDown(1) then
         local mouse_x, mouse_y = love.mouse.getPosition()
-        local hover_x = math.floor(mouse_x / square_size) + 1
-        local hover_y = math.floor(mouse_y / square_size) + 1
+        local hover_x = math.floor(mouse_x / square_size) 
+        local hover_y = math.floor(mouse_y / square_size) 
 
         -- Check if the player clicked a new position
         if hover_x ~= last_hover_x or hover_y ~= last_hover_y then
@@ -105,8 +108,8 @@ function player.update(dt)
 end
 function player.draw()
     -- Calculate the player's center position based on grid
-    local draw_x = (player.grid_x - 1) * square_size + square_size / 2
-    local draw_y = (player.grid_y - 1) * square_size + square_size / 2
+    local draw_x = (player.grid_x ) * square_size + square_size / 2
+    local draw_y = (player.grid_y ) * square_size + square_size / 2
 
     local image_offset = 16
 
@@ -118,7 +121,7 @@ function player.draw()
 
     -- Draw a semi-transparent rectangle to highlight the target square
     love.graphics.setColor(0.5, 0.5, 1, 0.5) -- light blue highlight (you can change this color)
-    love.graphics.rectangle("fill", (aim_x - 1) * square_size, (aim_y - 1) * square_size, square_size, square_size)
+    love.graphics.rectangle("fill", (aim_x ) * square_size, (aim_y ) * square_size, square_size, square_size)
 
  
 end

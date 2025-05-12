@@ -15,7 +15,7 @@ function map.load()
 end
 
 function map.draw()
-    mapgen.draw()  -- Corrected this line to call the draw function of mapgen
+    -- mapgen.draw()  -- Corrected this line to call the draw function of mapgen
     Position()
     dungenTime()
 end

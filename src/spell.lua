@@ -91,7 +91,7 @@ spell[spellIndex] = {
                 print("You are out of reach!")
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
-                fastSpellAnimations("fireball", x - 1, y - 1, aim_x - 1, aim_y - 1)
+                fastSpellAnimations("fireball", x , y , aim_x , aim_y )
                 time = time + 1 -- assuming global time
             end
             deselectAll()
@@ -115,7 +115,7 @@ spell[spellIndex2] = {
                 print("You are out of reach!")
             else
                 print("Casting iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
-                fastSpellAnimations("iceblast", x - 1, y - 1, aim_x - 1, aim_y - 1)
+                fastSpellAnimations("iceblast", x , y , aim_x , aim_y )
                 time = time + 1 -- assuming global time
             end
             deselectAll()
@@ -159,8 +159,8 @@ function spell.draw()
     if highlight_x and highlight_y and highlight_range then
         love.graphics.setColor(1, 1, 0, 0.2)
         local size = (highlight_range * 2 + 1) * tile_size
-        local draw_x = (highlight_x - 1 - highlight_range) * tile_size
-        local draw_y = (highlight_y - 1 - highlight_range) * tile_size
+        local draw_x = (highlight_x  - highlight_range) * tile_size
+        local draw_y = (highlight_y  - highlight_range) * tile_size
         love.graphics.rectangle("fill", draw_x, draw_y, size, size)
         love.graphics.setColor(1, 1, 1, 1)
     end
