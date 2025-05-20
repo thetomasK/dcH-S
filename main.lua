@@ -1,11 +1,24 @@
 local player = require "src.player"
 local tiles = require "src.tiles"
-local map = require "src.map"
+local ui = require "src.ui"
 local spell = require "src.spell"
+
+
+
+-- new shit local mapgen = require "src.mapgen"
+
+local mapgen = require "src.mapgen"
+
+
+
+
+camera = require "src.camera"
+cam = camera()
+
 
 function love.load()
     tiles.load()
-    map.load()
+    ui.load()
     player.load()
     
     love.keyboard.keysPressed = {}
@@ -14,15 +27,25 @@ end
 function love.update(dt)
     player.update(dt)
       -- << Call spell logic here
+      
+    
     spell.update(dt)
     love.keyboard.keysPressed = {}
+    cam:lookAt((player.grid_x - 0) * square_size, (player.grid_y - 0.5) * square_size)
+    
+
 end
 
 function love.draw()
-    map.draw()
+    
+    cam:attach()
+    mapgen.draw()  -- Corrected this line to call the draw function of mapgen
+    
     player.draw()
     spell.draw()
-         -- << Draw spell visuals here
+    cam:detach()    
+    ui.draw() 
+       -- << Draw spell visuals here
 end
 
 function love.keypressed(key)

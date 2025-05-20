@@ -101,7 +101,7 @@ spell[spellIndex] = {
 
 spell[spellIndex2] = {
     name = "iceblast",
-    range = 5,
+    range = 3,
     effect = function(x, y, aim_x, aim_y)
         if not selected[spellIndex2] then
             deselectAll()

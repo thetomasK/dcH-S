@@ -1,5 +1,7 @@
 local tiles = require "src.tiles"
 local spell = require "src.spell"
+local camera = require "src.camera"
+cam = camera()
 
 local player = {}
 time = 0 
@@ -11,47 +13,14 @@ function player.load()
 end
 
 function getMouseGridPosition(square_size)
-    local mouse_x, mouse_y = love.mouse.getPosition()
+    local mouse_x, mouse_y = cam:worldCoords(love.mouse.getPosition())
     local aim_x = math.floor(mouse_x / square_size)  -- koooooookt +1
     local aim_y = math.floor(mouse_y / square_size) 
     return aim_x, aim_y
 end
 
-
+local mousePressed = false
 function player.update(dt)
-    -- Handle mouse input as before
-    if love.mouse.isDown(1) then
-        local mouse_x, mouse_y = love.mouse.getPosition()
-        local hover_x = math.floor(mouse_x / square_size) 
-        local hover_y = math.floor(mouse_y / square_size) 
-
-        -- Check if the player clicked a new position
-        if hover_x ~= last_hover_x or hover_y ~= last_hover_y then
-            -- Calculate how many rows (Y) and columns (X) you've moved
-            local row_difference = math.abs(hover_y - player.grid_y)
-            local col_difference = math.abs(hover_x - player.grid_x)
-
-            -- Increment time for each row and column moved
-            for i = 1, row_difference do
-                time = time + 1
-            end
-
-            for i = 1, col_difference do
-                time = time + 1
-            end
-
-            -- Set the player's grid position to the new clicked position
-            player.grid_x = hover_x
-            player.grid_y = hover_y
-
-            -- Update the last hover position
-            last_hover_x = hover_x
-            last_hover_y = hover_y
-        end
-    else
-        last_hover_x = nil
-        last_hover_y = nil
-    end
     
     -- Handle Numpad and WASD + xz movement as before
     if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
@@ -93,7 +62,22 @@ function player.update(dt)
     elseif love.keyboard.wasPressed("kp5") then
         time = time + 1
     end
-    
+
+  
+    if love.mouse.isDown(1) then -- 2 is the right mouse button
+        if not mousePressed then
+            local aim_x, aim_y = getMouseGridPosition(square_size)
+            local distance = math.abs(aim_x - player.grid_x) + math.abs(aim_y - player.grid_y) -- this dont work as it should 
+            player.grid_x = aim_x
+            player.grid_y = aim_y
+            time = time + distance --this dont work as it should 
+            mousePressed = true
+        end
+    else
+        mousePressed = false -- Reset when the button is released
+    end
+
+
     -- Handle number keys 0-9 for spellcasting
     for i = 0, 9 do
         local key = tostring(i)
