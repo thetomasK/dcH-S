@@ -67,10 +67,14 @@ function player.update(dt)
     if love.mouse.isDown(1) then -- 2 is the right mouse button
         if not mousePressed then
             local aim_x, aim_y = getMouseGridPosition(square_size)
-            local distance = math.abs(aim_x - player.grid_x ) + math.abs(aim_y - player.grid_y )-- this dont work as it should 
+            function playerDistance(aim_x, aim_y, grid_x, grid_y)
+                return math.max(math.abs(aim_x - player.grid_x), math.abs(aim_y - player.grid_y)) -- i think this is caled manhattanDistance google sad that 
+            end
+            local distance = playerDistance(aim_x, aim_y, player.grid_x, player.grid_y)
+
             player.grid_x = aim_x
             player.grid_y = aim_y
-            time = time + distance --this dont work as it should 
+            time = time + distance --this dont work as it should now it work hihi
             mousePressed = true
         end
     else
