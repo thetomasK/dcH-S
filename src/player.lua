@@ -1,4 +1,4 @@
-local tiles = require "src.tiles"
+
 local spell = require "src.spell"
 local camera = require "src.camera"
 cam = camera()
@@ -10,6 +10,7 @@ player.grid_x = 0
 
 
 function player.load()
+    playerImage = love.graphics.newImage("tiles/asets/u/human.png")
 end
 
 function getMouseGridPosition(square_size)
@@ -102,7 +103,7 @@ function player.draw()
     local image_offset = 16
 
     -- Draw the player at the current position
-    tiles.draw(draw_x - image_offset, draw_y - image_offset)
+    love.graphics.draw(playerImage, draw_x - image_offset, draw_y - image_offset)
 
     -- Get the grid position the mouse is pointing at
     local aim_x, aim_y = getMouseGridPosition(square_size)

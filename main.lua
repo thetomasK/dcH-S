@@ -1,5 +1,5 @@
 local player = require "src.player"
-local tiles = require "src.tiles"
+
 local ui = require "src.ui"
 local spell = require "src.spell"
 
@@ -17,7 +17,7 @@ cam = camera()
 
 
 function love.load()
-    tiles.load()
+    
     ui.load()
     player.load()
     
