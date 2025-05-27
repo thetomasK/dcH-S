@@ -8,6 +8,19 @@ time = 0
 player.grid_y = 0
 player.grid_x = 0
 
+player.str = 1
+player.dex = 1
+player.int = 1
+player.ac = 1
+player.sh = 1
+player.ev = 1
+player.stlh = 1
+player.hp = 10
+player.mp = 5
+
+
+
+
 
 function player.load()
     playerImage = love.graphics.newImage("tiles/asets/u/human.png")
