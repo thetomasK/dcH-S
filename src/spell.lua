@@ -75,6 +75,7 @@ end
 spellIndex = 1
 spellIndex2 = 2
 
+
 spell[spellIndex] = {
     name = "fireball",
     range = 5,
@@ -89,11 +90,13 @@ spell[spellIndex] = {
                 print("Invalid aim position! (you would hit yourself)")
             elseif range_check(x, y, aim_x, aim_y, spell[spellIndex].range) then
                 print("You are out of reach!")
+            elseif mp < 1 then
+                print("Not enough mana points to cast iceblast!")
             else
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 fastSpellAnimations("fireball", x , y , aim_x , aim_y )
                 time = time + 1 -- assuming global time
-                -- assuming player has a 'sp' attribute for spell points
+                mp = mp - 1 -- assuming player has a 'sp' attribute for spell points
             end
             deselectAll()
         end
@@ -114,10 +117,13 @@ spell[spellIndex2] = {
                 print("Invalid aim position! (you would hit yourself)")
             elseif range_check(x, y, aim_x, aim_y, spell[spellIndex2].range) then
                 print("You are out of reach!")
+            elseif mp < 2 then
+                print("Not enough mana points to cast iceblast!")
             else
                 print("Casting iceblast from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 fastSpellAnimations("iceblast", x , y , aim_x , aim_y )
                 time = time + 1 -- assuming global time
+                mp = mp - 2
             end
             deselectAll()
         end
