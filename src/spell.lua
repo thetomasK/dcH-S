@@ -74,8 +74,8 @@ end
 
 local function blink(x, y, aim_x, aim_y)
     local range = 5
-    grid_x = x + math.random(-range, range)
-    grid_y = y + math.random(-range, range)
+    grid_x = x + 1 + math.random(-range, range)
+    grid_y = y + 1 + math.random(-range, range)
     deselectAll()
 end
 
@@ -142,21 +142,16 @@ spell[spellIndex2] = {
 spell[spellIndex3] = {
     --- blink spell
     effect = function(x, y, aim_x, aim_y)
-        if not selected[spellIndex3] then
-            deselectAll()
-            selected[spellIndex3] = true
-           
+        
+        if mp < 2 then
+            print("Not enough mana points to cast blink!")
         else
-            if mp < 2 then
-                print("Not enough mana points to cast blink!")
-            else
-                
-                time = time + 1 -- assuming global time
-                mp = mp - 2
-                blink(x, y, aim_x, aim_y)
-            end
-            deselectAll()
+            
+            time = time + 1 -- assuming global time
+            mp = mp - 2
+            blink(x, y, aim_x, aim_y)
         end
+        deselectAll()
     end
 }
 
