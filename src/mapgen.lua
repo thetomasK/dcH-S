@@ -92,8 +92,8 @@ function mapgen.generate(cols, rows)
     if #rooms > 0 then
         local start = rooms[1]
         mx[start.y][start.x] = 0
-        player.grid_x = start.x
-        player.grid_y = start.y
+        grid_x = start.x
+        grid_y = start.y
     end
 
     mapgen.map = mx

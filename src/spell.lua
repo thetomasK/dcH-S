@@ -72,8 +72,16 @@ local function fastSpellAnimations(spell_type, x, y, aim_x, aim_y)
     })
 end
 
+local function blink(x, y, aim_x, aim_y)
+    local range = 5
+    grid_x = x + math.random(-range, range)
+    grid_y = y + math.random(-range, range)
+    deselectAll()
+end
+
 spellIndex = 1
 spellIndex2 = 2
+spellIndex3 = 3
 
 
 spell[spellIndex] = {
@@ -129,6 +137,33 @@ spell[spellIndex2] = {
         end
     end
 }
+
+
+spell[spellIndex3] = {
+    --- blink spell
+    effect = function(x, y, aim_x, aim_y)
+        if not selected[spellIndex3] then
+            deselectAll()
+            selected[spellIndex3] = true
+           
+        else
+            if mp < 2 then
+                print("Not enough mana points to cast blink!")
+            else
+                
+                time = time + 1 -- assuming global time
+                mp = mp - 2
+                blink(x, y, aim_x, aim_y)
+            end
+            deselectAll()
+        end
+    end
+}
+
+
+
+
+
 
 -- Update function
 function spell.update(dt)

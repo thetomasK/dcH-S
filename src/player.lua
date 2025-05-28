@@ -5,8 +5,8 @@ cam = camera()
 
 local player = {}
 time = 0 
-player.grid_y = 0
-player.grid_x = 0
+grid_y = 4
+grid_x = 4
 
 str = 1      -- strength
 dex = 1  -- dexterity
@@ -17,7 +17,7 @@ ev = 1 -- evasion
 stlh = 1 -- stealth
 hp = 10 -- hit points
 sp = 5 -- skill points
-mp = 5  -- this is mana points 
+mp = 100  -- this is mana points 
 
 
 
@@ -39,39 +39,39 @@ function player.update(dt)
     
     -- Handle Numpad and WASD + xz movement as before
     if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
-        player.grid_x = player.grid_x + 1
+        grid_x = grid_x + 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp4") or love.keyboard.wasPressed("a") then
-        player.grid_x = player.grid_x - 1
+        grid_x = grid_x - 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp2") or love.keyboard.wasPressed("s") then
-        player.grid_y = player.grid_y + 1
+        grid_y = grid_y + 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp8") or love.keyboard.wasPressed("w") then
-        player.grid_y = player.grid_y - 1
+        grid_y = grid_y - 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp3") or love.keyboard.wasPressed("x") then
-        player.grid_x = player.grid_x + 1
-        player.grid_y = player.grid_y + 1
+        grid_x = grid_x + 1
+        grid_y = grid_y + 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp1") or love.keyboard.wasPressed("z") then
-        player.grid_x = player.grid_x - 1
-        player.grid_y = player.grid_y + 1
+        grid_x = grid_x - 1
+        grid_y = grid_y + 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp9") or love.keyboard.wasPressed("e") then
-        player.grid_x = player.grid_x + 1
-        player.grid_y = player.grid_y - 1
+        grid_x = grid_x + 1
+        grid_y = grid_y - 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp7") or love.keyboard.wasPressed("q") then
-        player.grid_x = player.grid_x - 1
-        player.grid_y = player.grid_y - 1
+        grid_x = grid_x - 1
+        grid_y = grid_y - 1
         time = time + 1
 
     elseif love.keyboard.wasPressed("kp5") then
@@ -83,12 +83,12 @@ function player.update(dt)
         if not mousePressed then
             local aim_x, aim_y = getMouseGridPosition(square_size)
             function playerDistance(aim_x, aim_y, grid_x, grid_y)
-                return math.max(math.abs(aim_x - player.grid_x), math.abs(aim_y - player.grid_y)) -- i think this is caled manhattanDistance google sad that 
+                return math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) -- i think this is caled manhattanDistance google sad that 
             end
-            local distance = playerDistance(aim_x, aim_y, player.grid_x, player.grid_y)
+            local distance = playerDistance(aim_x, aim_y, grid_x, grid_y)
 
-            player.grid_x = aim_x
-            player.grid_y = aim_y
+            grid_x = aim_x
+            grid_y = aim_y
             time = time + distance --this dont work as it should now it work hihi
             mousePressed = true
         end
@@ -104,15 +104,15 @@ function player.update(dt)
             local selected_spell = spell[i]
             if selected_spell then
                 local aim_x, aim_y = getMouseGridPosition(square_size)
-                selected_spell.effect(player.grid_x, player.grid_y, aim_x, aim_y)
+                selected_spell.effect(grid_x, grid_y, aim_x, aim_y)
             end
         end
     end
 end
 function player.draw()
     -- Calculate the player's center position based on grid
-    local draw_x = (player.grid_x ) * square_size + square_size / 2
-    local draw_y = (player.grid_y ) * square_size + square_size / 2
+    local draw_x = (grid_x ) * square_size + square_size / 2
+    local draw_y = (grid_y ) * square_size + square_size / 2
 
     local image_offset = 16
 

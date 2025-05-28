@@ -9,7 +9,7 @@ end
 
 function position()
     love.graphics.setFont(boldFont) -- Apply the bold font
-    love.graphics.print("Player position: (" .. player.grid_x .. ", " .. player.grid_y .. ")", 10, 0)
+    love.graphics.print("Player position: (" .. grid_x .. ", " .. grid_y .. ")", 10, 0)
 end
 
 function stats()
