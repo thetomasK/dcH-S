@@ -8,15 +8,16 @@ time = 0
 player.grid_y = 0
 player.grid_x = 0
 
-player.str = 1
-player.dex = 1
-player.int = 1
-player.ac = 1
-player.sh = 1
-player.ev = 1
-player.stlh = 1
-player.hp = 10
-player.mp = 5
+player.str = 1      -- strength
+player.dex = 1  -- dexterity
+player.int = 1 -- intelligence
+player.ac = 1 -- armor class
+player.sh = 1 -- shield
+player.ev = 1 -- evasion
+player.stlh = 1 -- stealth
+player.hp = 10 -- hit points
+player.sp = 5 -- skill points
+player.mp = 5  -- this is mana points 
 
 
 

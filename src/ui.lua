@@ -27,9 +27,14 @@ function stats()
     love.graphics.print("hp:    " .. player.hp,     10, 210)
 
     love.graphics.setColor(0, 1, 0) -- Green
-    love.graphics.print("mp:    " .. player.mp,     10, 230)
+    love.graphics.print("sp:    " .. player.sp,     10, 230)
+    
+    love.graphics.setColor(0, 0, 1) -- Blue
+    love.graphics.print("mp:    " .. player.mp,     10, 250)
 
     love.graphics.setColor(1, 1, 1) -- Reset to white
+
+
 end
 
 function dungenTime()

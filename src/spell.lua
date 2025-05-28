@@ -93,6 +93,7 @@ spell[spellIndex] = {
                 print("Casting Fireball from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
                 fastSpellAnimations("fireball", x , y , aim_x , aim_y )
                 time = time + 1 -- assuming global time
+                -- assuming player has a 'sp' attribute for spell points
             end
             deselectAll()
         end
