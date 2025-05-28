@@ -29,7 +29,7 @@ end
 
 function getMouseGridPosition(square_size)
     local mouse_x, mouse_y = cam:worldCoords(love.mouse.getPosition())
-    local aim_x = math.floor(mouse_x / square_size)  -- koooooookt +1
+    local aim_x = math.floor(mouse_x / square_size)  
     local aim_y = math.floor(mouse_y / square_size) 
     return aim_x, aim_y
 end
@@ -77,7 +77,18 @@ function player.update(dt)
     elseif love.keyboard.wasPressed("kp5") then
         time = time + 1
     end
-
+    
+    -- melee 
+    if love.keyboard.wasPressed("f") then
+        local aim_x, aim_y = getMouseGridPosition(square_size)
+        if math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) <= 1 then
+            -- Perform melee attack logic here
+            print("Melee attack at (" .. aim_x .. ", " .. aim_y .. ")")
+            -- You can also call a function to handle the attack
+        else
+            print("Target out of melee range")
+        end
+    end
   
     if love.mouse.isDown(1) then -- 2 is the right mouse button
         if not mousePressed then

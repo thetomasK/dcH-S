@@ -1,0 +1,79 @@
+
+str -- increase dmg whit nonstabing weapons + hp , ac , sh (little bonus for sh)
+dex -- increase dmg whit stabing weapons + stlh , ev + sp  
+int -- make u stronger whit spells and increase your change to use magic spells + mp
+
+
+
+training - u chose what to train 
+
+        fight = it increase hp 
+
+        ac =  -- armor class
+        sh =  -- shield
+        ev =  -- evasion
+        stlh =  -- stealth
+        
+        
+        movement =  -- increase skill points 
+        schools(for movent)
+                dmg skills
+                evasion skills
+                tricks
+                anti magic -- makes u deal with magic 
+
+        spellcasting  =   -- this is increase mana points 
+        schools(magic)
+                elements
+                conuration 
+                hex - debuffs and confuse
+                Charms - buffs
+                dark magic - good spels that harms u some way 
+                necromancy - summoning dead and shit like that 
+                translocation - movement magic
+
+                alchemy --u will be  better whit potion
+                magic Crafts -u will be whit better magic items
+
+        faith = your good will like u more better benefits
+
+
+
+weapons -- mace -- nonstabing 1 and 2 hand
+        -- scythe stabing/nonstabing 2 hand only rare it has flat dmg 
+        -- polearms stabing and some stabing/nonstabing it has beter reach 
+        -- sword stabing/nonstabing 1 and 2 hand
+        -- dagger stabing also u can be used as secondary
+        -- magic stuffs gives u magic benefits
+
+secondary -- shield
+        -- orb/books (buffs u some way )
+        -- dagger
+
+
+enchants - bleed poison frost fire live-steal and special
+
+
+
+gods:
+
+humilitas --    no gold extra exp and one item from here
+                -- reper talisman -- make's all weapons scythe and scythe does flat dmg but u can only wear robe and robe will turn black also no head gear 
+                                     and u will see invisble 
+
+                -- dumb sword talisman -- make's all weapons swords and lower your mp and int but increase str and dmg 
+                -- heavy talisman -- increase weight of all items 2 times but makes them better (weith lover your change to use spells u need )
+                -- talisman of second head -- u will have second haad for amulets
+                -- strong arms talisman -- makes u dual wield all melee weapons and stuffs 
+
+goldzolotes -- extra gold
+
+
+the one behind 
+
+
+imperius
+
+
+extras
+
