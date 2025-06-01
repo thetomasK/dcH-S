@@ -5,4 +5,5 @@ end
 
 function testmap.draw()
 end
+
 return testmap

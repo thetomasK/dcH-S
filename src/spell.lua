@@ -5,7 +5,7 @@ local selected = {}
 local tile_size = 32
 
 -- Spell names
-local spell_names = { "fireball", "iceblast" }
+local spell_names = { "fireball", "iceblast", "conjurationBall"}
 
 -- Image storage
 local spell_images = {}
@@ -79,14 +79,23 @@ local function blink(x, y, aim_x, aim_y)
     deselectAll()
 end
 
-spellIndex = 1
-spellIndex2 = 2
-spellIndex3 = 3
-spellIndex4 = 4
-spellIndex5 = 5
+-- conjuration
+
+
+fireball = 1-- elements/conjuration
+iceblast = 2-- elements/conjuration
+
+blinkspell = 0 --translocation
+
+heal = 0 -- charms
+manaheal = 0 -- charms
+
+
+conjurationBall = 3 -- conjuration
 
 --[[
-    conuration 
+    elements
+    conjuration 
     hex - debuffs and confuse
     Charms - buffs
     dark magic - good spels that harms u some way 
@@ -97,19 +106,47 @@ spellIndex5 = 5
 
 
 -- elements 
-spell[spellIndex] = {
-    name = "fireball",
+
+spell[conjurationBall] = {
+    name = "conjurationBall",
     range = 5,
     effect = function(x, y, aim_x, aim_y)
-        if not selected[spellIndex] then
+        if not selected[conjurationBall] then
             deselectAll()
-            selected[spellIndex] = true
-            print("Selected spell: Fireball (press again to cast)")
-            squareHighlight(x, y, spell[spellIndex].range)
+            selected[conjurationBall] = true
+            print("Selected spell: conjurationBall (press again to cast)")
+            squareHighlight(x, y, spell[conjurationBall].range)
         else
             if aim_x == x and aim_y == y then
                 print("Invalid aim position! (you would hit yourself)")
-            elseif range_check(x, y, aim_x, aim_y, spell[spellIndex].range) then
+            elseif range_check(x, y, aim_x, aim_y, spell[conjurationBall].range) then
+                print("You are out of reach!")
+            elseif mp < 1 then
+                print("Not enough mana points to cast iceblast!")
+            else
+                print("Casting conjurationBall from (" .. x .. ", " .. y .. ") to (" .. aim_x .. ", " .. aim_y .. ")")
+                fastSpellAnimations("conjurationBall", x , y , aim_x , aim_y )
+                time = time + 1 -- assuming global time
+                mp = mp - 1 -- assuming player has a 'sp' attribute for spell points
+            end
+            deselectAll()
+        end
+    end
+}
+
+spell[fireball] = {
+    name = "fireball",
+    range = 5,
+    effect = function(x, y, aim_x, aim_y)
+        if not selected[fireball] then
+            deselectAll()
+            selected[fireball] = true
+            print("Selected spell: Fireball (press again to cast)")
+            squareHighlight(x, y, spell[fireball].range)
+        else
+            if aim_x == x and aim_y == y then
+                print("Invalid aim position! (you would hit yourself)")
+            elseif range_check(x, y, aim_x, aim_y, spell[fireball].range) then
                 print("You are out of reach!")
             elseif mp < 1 then
                 print("Not enough mana points to cast iceblast!")
@@ -124,19 +161,21 @@ spell[spellIndex] = {
     end
 }
 
-spell[spellIndex2] = {
+
+
+spell[iceblast] = {
     name = "iceblast",
-    range = 3,
+    range = 5,
     effect = function(x, y, aim_x, aim_y)
-        if not selected[spellIndex2] then
+        if not selected[iceblast] then
             deselectAll()
-            selected[spellIndex2] = true
+            selected[iceblast] = true
             print("Selected spell: iceblast (press again to cast)")
-            squareHighlight(x, y, spell[spellIndex2].range)
+            squareHighlight(x, y, spell[iceblast].range)
         else
             if aim_x == x and aim_y == y then
                 print("Invalid aim position! (you would hit yourself)")
-            elseif range_check(x, y, aim_x, aim_y, spell[spellIndex2].range) then
+            elseif range_check(x, y, aim_x, aim_y, spell[iceblast].range) then
                 print("You are out of reach!")
             elseif mp < 2 then
                 print("Not enough mana points to cast iceblast!")
@@ -152,7 +191,7 @@ spell[spellIndex2] = {
 }
 
 
-spell[spellIndex3] = {
+spell[blinkspell] = {
     --- blink spell
     effect = function(x, y, aim_x, aim_y)
         
@@ -163,29 +202,36 @@ spell[spellIndex3] = {
             time = time + 1 -- assuming global time
             mp = mp - 2
             blink(x, y, aim_x, aim_y)
+            print("u blinked")
         end
         deselectAll()
     end
 }
 
-spell[spellIndex4] = {
+spell[heal] = {
     --- heal spell
     effect = function(x, y, aim_x, aim_y)
         
-        if mp < 10 then
-            print("Not enough mana points to cast heal!")
-        else
-            
-            time = time + 1 -- assuming global time
-            mp = mp - 2
-            hp = hp + 10
+            if mp < 10 then
+                print("Not enough mana points to cast heal!")
+            elseif hp == maxhp then
+                print("u are fully healed")
+            else
+                
+                time = time + 1 -- assuming global time
+                mp = mp - 2
+                hp = hp + 10
+                print("u are healed")
+            end
+        if hp > maxhp then
+            hp = maxhp
         end
         deselectAll()
     end
 }
 
-spell[spellIndex5] = {
-    --- heal spell
+spell[manaheal] = {
+    --- mana he spell
     effect = function(x, y, aim_x, aim_y)
         
         if hp < 11 then
@@ -195,6 +241,7 @@ spell[spellIndex5] = {
             time = time + 1 -- assuming global time
             hp = hp - 10
             mp = mp + 5
+            print("+ mp")
         end
         deselectAll()
     end
@@ -206,7 +253,7 @@ spell[spellIndex5] = {
 -- Update function
 function spell.update(dt)
     for i = 1, #selected do
-        if selected[i] and (anyKeyDown(cancelKeys) or love.mouse.isDown(1) or love.mouse.isDown(2)) then
+        if selected[i] and (anyKeyDown(cancelKeys) or love.mouse.isDown(1) ) then
             deselectAll()
             if not cancelPrinted then
                 print("Spell selection canceled.")

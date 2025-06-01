@@ -15,11 +15,13 @@ ac = 1 -- armor class
 sh = 1 -- shield
 ev = 1 -- evasion
 stlh = 1 -- stealth
-hp = 10 -- hit points
-sp = 5 -- skill points
+hp = 100 -- hit points
+sp = 100-- skill points
 mp = 100  -- this is mana points 
 
-
+maxhp = 100
+maxsp = 100
+maxmp = 100 
 
 
 
@@ -109,7 +111,7 @@ function player.update(dt)
 
 
     -- Handle number keys 0-9 for spellcasting
-    for i = 0, 9 do
+    for i = 1, 9 do
         local key = tostring(i)
         if love.keyboard.wasPressed(key) then
             local selected_spell = spell[i]

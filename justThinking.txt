@@ -25,7 +25,7 @@ training - u chose what to train
         spellcasting  =   -- this is increase mana points 
         schools(magic)
                 elements
-                conuration 
+                conjuration 
                 hex - debuffs and confuse
                 Charms - buffs
                 dark magic - good spels that harms u some way 
