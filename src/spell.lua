@@ -85,6 +85,17 @@ spellIndex3 = 3
 spellIndex4 = 4
 spellIndex5 = 5
 
+--[[
+    conuration 
+    hex - debuffs and confuse
+    Charms - buffs
+    dark magic - good spels that harms u some way 
+    necromancy - summoning dead and shit like that 
+    translocation - movement magic
+]]
+
+
+
 -- elements 
 spell[spellIndex] = {
     name = "fireball",
