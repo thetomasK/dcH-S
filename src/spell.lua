@@ -82,8 +82,10 @@ end
 spellIndex = 1
 spellIndex2 = 2
 spellIndex3 = 3
+spellIndex4 = 4
+spellIndex5 = 5
 
-
+-- elements 
 spell[spellIndex] = {
     name = "fireball",
     range = 5,
@@ -155,7 +157,37 @@ spell[spellIndex3] = {
     end
 }
 
+spell[spellIndex4] = {
+    --- heal spell
+    effect = function(x, y, aim_x, aim_y)
+        
+        if mp < 10 then
+            print("Not enough mana points to cast heal!")
+        else
+            
+            time = time + 1 -- assuming global time
+            mp = mp - 2
+            hp = hp + 10
+        end
+        deselectAll()
+    end
+}
 
+spell[spellIndex5] = {
+    --- heal spell
+    effect = function(x, y, aim_x, aim_y)
+        
+        if hp < 11 then
+            print("u will die")
+        else
+            
+            time = time + 1 -- assuming global time
+            hp = hp - 10
+            mp = mp + 5
+        end
+        deselectAll()
+    end
+}
 
 
 
