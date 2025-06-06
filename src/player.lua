@@ -8,12 +8,12 @@ time = 0
 grid_y = 4
 grid_x = 4
 
-str = 1      -- strength
-dex = 1  -- dexterity
-int = 1 -- intelligence
-ac = 1 -- armor class
-sh = 1 -- shield
-ev = 1 -- evasion
+str = 20     -- strength
+dex = 10  -- dexterity
+int = 5 -- intelligence
+ac = 4 -- armor class
+sh = 2 -- shield
+ev = 2 -- evasion
 stlh = 1 -- stealth
 hp = 100 -- hit points
 sp = 100-- skill points
@@ -23,7 +23,7 @@ maxhp = 100
 maxsp = 100
 maxmp = 100 
 
-
+spear = false
 
 function player.load()
     playerImage = love.graphics.newImage("tiles/asets/u/human.png")
@@ -35,6 +35,9 @@ function getMouseGridPosition(square_size)
     local aim_y = math.floor(mouse_y / square_size) 
     return aim_x, aim_y
 end
+
+
+
 
 local mousePressed = false
 function player.update(dt)
@@ -84,6 +87,10 @@ function player.update(dt)
     if love.keyboard.wasPressed("f") then
         local aim_x, aim_y = getMouseGridPosition(square_size)
         if math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) <= 1 then
+            -- Perform melee attack logic here
+            print("Melee attack at (" .. aim_x .. ", " .. aim_y .. ")")
+            -- You can also call a function to handle the attack
+        elseif spear == true and math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) <= 2 then
             -- Perform melee attack logic here
             print("Melee attack at (" .. aim_x .. ", " .. aim_y .. ")")
             -- You can also call a function to handle the attack

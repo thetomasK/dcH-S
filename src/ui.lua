@@ -15,22 +15,22 @@ end
 function stats()
     love.graphics.setFont(boldFont) -- Apply the bold font
     love.graphics.setColor(1, 1, 0) -- Yellow
-    love.graphics.print("str:   " .. str,    10, 70)
-    love.graphics.print("dex:   " .. dex,    10, 90)
-    love.graphics.print("int:   " .. int,    10, 110)
-    love.graphics.print("ac:    " .. ac,     10, 130)
-    love.graphics.print("sh:    " .. sh,     10, 150)
-    love.graphics.print("ev:    " .. ev,     10, 170)
-    love.graphics.print("stlh:  " .. stlh,   10, 190)
+    love.graphics.print("str:   " .. str,    10, 120)
+    love.graphics.print("dex:   " .. dex,    10, 140)
+    love.graphics.print("int:   " .. int,    10, 160)
+    love.graphics.print("ac:    " .. ac,     10, 180)
+    love.graphics.print("sh:    " .. sh,     10, 200)
+    love.graphics.print("ev:    " .. ev,     10, 220)
+    love.graphics.print("stlh:  " .. stlh,   10, 240)
 
     love.graphics.setColor(1, 0, 0) -- Red
-    love.graphics.print("hp:    " .. hp,     10, 210)
+    love.graphics.print("hp:    " .. hp,     10, 55)
 
     love.graphics.setColor(0, 1, 0) -- Green
-    love.graphics.print("sp:    " .. sp,     10, 230)
+    love.graphics.print("sp:    " .. sp,     10, 75)
     
     love.graphics.setColor(0, 0, 1) -- Blue
-    love.graphics.print("mp:    " .. mp,     10, 250)
+    love.graphics.print("mp:    " .. mp,     10, 95)
 
     love.graphics.setColor(1, 1, 1) -- Reset to white
 

@@ -82,14 +82,17 @@ end
 -- conjuration
 
 
-fireball = 1-- elements/conjuration
-iceblast = 2-- elements/conjuration
+local fireball = 1-- elements/conjuration
+local iceblast = 2-- elements/conjuration
 
-blinkspell = 0 --translocation
+local blinkspell = 0 --translocation
 
-heal = 0 -- charms
-manaheal = 0 -- charms
+local heal = 0 -- charms
+local manaheal = 0 -- charms
 
+local corrupting = 0 -- dark magic
+
+local decay = 0 -- necromancy
 
 conjurationBall = 3 -- conjuration
 
@@ -109,7 +112,7 @@ conjurationBall = 3 -- conjuration
 
 spell[conjurationBall] = {
     name = "conjurationBall",
-    range = 5,
+    range = 8,
     effect = function(x, y, aim_x, aim_y)
         if not selected[conjurationBall] then
             deselectAll()
@@ -165,7 +168,7 @@ spell[fireball] = {
 
 spell[iceblast] = {
     name = "iceblast",
-    range = 5,
+    range = 3,
     effect = function(x, y, aim_x, aim_y)
         if not selected[iceblast] then
             deselectAll()
@@ -253,7 +256,7 @@ spell[manaheal] = {
 -- Update function
 function spell.update(dt)
     for i = 1, #selected do
-        if selected[i] and (anyKeyDown(cancelKeys) or love.mouse.isDown(1) ) then
+        if selected[i] and (anyKeyDown(cancelKeys) or love.mouse.isDown(1) or love.mouse.isDown(2) ) then
             deselectAll()
             if not cancelPrinted then
                 print("Spell selection canceled.")

@@ -7,8 +7,8 @@ local spell = require "src.spell"
 
 -- new shit local mapgen = require "src.mapgen"
 
---local mapgen = require "src.mapgen"
-local testmap = require "src.testmap"
+local mapgen = require "src.mapgen"
+--local testmap = require "src.testmap"
 
 
 
@@ -39,8 +39,8 @@ end
 function love.draw()
     
     cam:attach()
-    --mapgen.draw()
-    testmap.draw()  -- Corrected this line to call the draw function of mapgen
+    mapgen.draw()
+    --testmap.draw()  -- Corrected this line to call the draw function of mapgen
     player.draw()
     spell.draw()
     cam:detach()    
