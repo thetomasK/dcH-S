@@ -28,7 +28,7 @@ function love.update(dt)
     player.update(dt)
       -- << Call spell logic here
       
-    
+    ui.update(dt)
     spell.update(dt)
     love.keyboard.keysPressed = {}
     cam:lookAt((grid_x - 0) * square_size, (grid_y - 0.5) * square_size)

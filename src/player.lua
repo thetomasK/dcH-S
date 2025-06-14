@@ -1,9 +1,10 @@
-
 local spell = require "src.spell"
 local camera = require "src.camera"
 cam = camera()
 
 local player = {}
+
+
 time = 0 
 grid_y = 4
 grid_x = 4
@@ -23,6 +24,34 @@ maxhp = 100
 maxsp = 100
 maxmp = 100 
 
+
+-- traning skills
+fight = 0
+swords = 0
+daggers = 0
+mace = 0
+axes = 0
+polearms = 0
+elements = 0
+conjuration = 0
+charms = 0
+dark_magic = 0
+necromancy = 0
+translocation = 0
+alchemy = 0
+magic_crafts = 0
+faith = 0
+magic= 0
+movement = 0
+dmg_skills = 0
+evasion_skills = 0
+tricks = 0
+anti_magic = 0
+
+
+
+
+
 spear = false
 
 function player.load()
@@ -36,88 +65,26 @@ function getMouseGridPosition(square_size)
     return aim_x, aim_y
 end
 
-
-
-
-local mousePressed = false
-function player.update(dt)
-    
-    -- Handle Numpad and WASD + xz movement as before
-    if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
-        grid_x = grid_x + 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp4") or love.keyboard.wasPressed("a") then
-        grid_x = grid_x - 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp2") or love.keyboard.wasPressed("s") then
-        grid_y = grid_y + 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp8") or love.keyboard.wasPressed("w") then
-        grid_y = grid_y - 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp3") or love.keyboard.wasPressed("x") then
-        grid_x = grid_x + 1
-        grid_y = grid_y + 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp1") or love.keyboard.wasPressed("z") then
-        grid_x = grid_x - 1
-        grid_y = grid_y + 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp9") or love.keyboard.wasPressed("e") then
-        grid_x = grid_x + 1
-        grid_y = grid_y - 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp7") or love.keyboard.wasPressed("q") then
-        grid_x = grid_x - 1
-        grid_y = grid_y - 1
-        time = time + 1
-
-    elseif love.keyboard.wasPressed("kp5") then
-        time = time + 1
-    end
-    
-    -- melee 
+function melee()
     if love.keyboard.wasPressed("f") then
         local aim_x, aim_y = getMouseGridPosition(square_size)
         if math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) <= 1 then
             -- Perform melee attack logic here
             print("Melee attack at (" .. aim_x .. ", " .. aim_y .. ")")
+            time = time + 1
             -- You can also call a function to handle the attack
         elseif spear == true and math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) <= 2 then
             -- Perform melee attack logic here
             print("Melee attack at (" .. aim_x .. ", " .. aim_y .. ")")
+            time = time + 1
             -- You can also call a function to handle the attack
         else
             print("Target out of melee range")
         end
     end
-  
-    if love.mouse.isDown(1) then -- 2 is the right mouse button
-        if not mousePressed then
-            local aim_x, aim_y = getMouseGridPosition(square_size)
-            function playerDistance(aim_x, aim_y, grid_x, grid_y)
-                return math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) -- i think this is caled manhattanDistance google sad that 
-            end
-            local distance = playerDistance(aim_x, aim_y, grid_x, grid_y)
+end
 
-            grid_x = aim_x
-            grid_y = aim_y
-            time = time + distance --this dont work as it should now it work hihi
-            mousePressed = true
-        end
-    else
-        mousePressed = false -- Reset when the button is released
-    end
-
-
-    -- Handle number keys 0-9 for spellcasting
+function spellcasting()
     for i = 1, 9 do
         local key = tostring(i)
         if love.keyboard.wasPressed(key) then
@@ -129,6 +96,90 @@ function player.update(dt)
         end
     end
 end
+
+
+
+local mousePressed = false
+local menuActive = false -- Flag to track if the menu is active
+
+function toggleMenu()
+    if love.keyboard.wasPressed("m") then
+        menuActive = not menuActive -- Toggle the menu state
+        if menuActive then
+            print("Menu opened")
+        else
+            print("Menu closed")
+        end
+    end
+end
+
+function player.update(dt)
+    toggleMenu() -- Check if the menu should be toggled
+
+    if not menuActive then
+        -- Handle Numpad and WASD + xz movement as before
+        if love.keyboard.wasPressed("kp6") or love.keyboard.wasPressed("d") then
+            grid_x = grid_x + 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp4") or love.keyboard.wasPressed("a") then
+            grid_x = grid_x - 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp2") or love.keyboard.wasPressed("s") then
+            grid_y = grid_y + 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp8") or love.keyboard.wasPressed("w") then
+            grid_y = grid_y - 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp3") or love.keyboard.wasPressed("x") then
+            grid_x = grid_x + 1
+            grid_y = grid_y + 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp1") or love.keyboard.wasPressed("z") then
+            grid_x = grid_x - 1
+            grid_y = grid_y + 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp9") or love.keyboard.wasPressed("e") then
+            grid_x = grid_x + 1
+            grid_y = grid_y - 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp7") or love.keyboard.wasPressed("q") then
+            grid_x = grid_x - 1
+            grid_y = grid_y - 1
+            time = time + 1
+
+        elseif love.keyboard.wasPressed("kp5") then
+            time = time + 1
+        end
+
+        if love.mouse.isDown(1) then -- 2 is the right mouse button
+            if not mousePressed then
+                local aim_x, aim_y = getMouseGridPosition(square_size)
+                function playerDistance(aim_x, aim_y, grid_x, grid_y)
+                    return math.max(math.abs(aim_x - grid_x), math.abs(aim_y - grid_y)) -- i think this is caled manhattanDistance google sad that 
+                end
+                local distance = playerDistance(aim_x, aim_y, grid_x, grid_y)
+
+                grid_x = aim_x
+                grid_y = aim_y
+                time = time + distance 
+                mousePressed = true
+            end
+        else
+            mousePressed = false -- Reset when the button is released
+        end
+
+        melee()
+        spellcasting()
+    end
+end
+
 function player.draw()
     -- Calculate the player's center position based on grid
     local draw_x = (grid_x ) * square_size + square_size / 2
