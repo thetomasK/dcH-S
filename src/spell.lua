@@ -94,7 +94,7 @@ local corrupting = 0 -- dark magic
 
 local decay = 0 -- necromancy
 
-conjurationBall = 3 -- conjuration
+local conjurationBall = 3 -- conjuration
 
 --[[
     elements
