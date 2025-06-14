@@ -1,7 +1,7 @@
 local ui = {}
 local player = require "src.player"
 local boldFont -- Declare the bold font variable
-local menuOpen = false -- Track if the menu is open
+local traning_Menu = false -- Track if the menu is open
 
 function ui.load()
     square_size = 32 -- you can guess what this does
@@ -41,7 +41,7 @@ function dungenTime()
     love.graphics.print("Dungeon Time: " .. time, 10, 30) 
 end
 
-function drawMenu()
+function traningMenu()
     love.graphics.setFont(boldFont)
     love.graphics.setColor(0, 0, 0, 0.8) -- Semi-transparent black background
     love.graphics.rectangle("fill", 50, 50, 300, 600)
@@ -71,20 +71,50 @@ function drawMenu()
     love.graphics.print("tricks: " .. tricks, 60, 520)
     love.graphics.print("anti magic: " .. anti_magic, 60, 540)
 
-    love.graphics.print("tipe m to leave menu: " , 60, 580)
+    love.graphics.print("tipe m to leave traning menu: " , 60, 580)
 
+end
+
+function drawMenu()
+    local screenWidth, screenHeight = love.graphics.getDimensions() -- Get screen dimensions
+    love.graphics.setFont(boldFont)
+    love.graphics.setColor(0, 0, 0, 0.8) -- Semi-transparent black background
+    love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight) -- Full-screen background
+    love.graphics.setColor(1, 1, 1) -- White text
+
+    -- Calculate text positions to center them
+    local title = "Main Menu"
+    local saveOption = "1. Save Game"
+    local exitOption = "2. Exit Game"
+    local instruction = "Press the esc to leave menu."
+
+    local titleWidth = boldFont:getWidth(title)
+    local saveWidth = boldFont:getWidth(saveOption)
+    local exitWidth = boldFont:getWidth(exitOption)
+    local instructionWidth = boldFont:getWidth(instruction)
+
+    love.graphics.print(title, (screenWidth - titleWidth) / 2, screenHeight / 2 - 60)
+    love.graphics.print(saveOption, (screenWidth - saveWidth) / 2, screenHeight / 2)
+    love.graphics.print(exitOption, (screenWidth - exitWidth) / 2, screenHeight / 2 + 40)
+    love.graphics.print(instruction, (screenWidth - instructionWidth) / 2, screenHeight / 2 + 100)
 end
 
 function ui.update()
     if love.keyboard.isDown("m") then
-        menuOpen = not menuOpen -- Toggle menu state
+        traning_Menu = not traning_Menu -- Toggle menu state
+        love.timer.sleep(0.2) -- Prevent rapid toggling
+    elseif love.keyboard.wasPressed("escape") then
+        menu = not menu -- Toggle menu state
         love.timer.sleep(0.2) -- Prevent rapid toggling
     end
 end
 
 function ui.draw()
-    if menuOpen then
+    if traning_Menu then
+        traningMenu()
+    elseif menu then
         drawMenu()
+    
     else
         stats()
         position()

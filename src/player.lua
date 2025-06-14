@@ -103,7 +103,7 @@ local mousePressed = false
 local menuActive = false -- Flag to track if the menu is active
 
 function toggleMenu()
-    if love.keyboard.wasPressed("m") then
+    if love.keyboard.wasPressed("m") or love.keyboard.wasPressed("escape") then
         menuActive = not menuActive -- Toggle the menu state
         if menuActive then
             print("Menu opened")
